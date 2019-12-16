@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -21,6 +22,7 @@ public class PlayerMovement : MonoBehaviour
     bool rightClick = false;
 
     Camera mainCam;
+    public GameObject crosshair;
 
     private Rigidbody rb;
 
@@ -30,6 +32,7 @@ public class PlayerMovement : MonoBehaviour
         mainCam = Camera.main;
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
+       
     }
 
     // Update is called once per frame
@@ -112,12 +115,15 @@ public class PlayerMovement : MonoBehaviour
         }
         if (rightClick)
         {
-           
             mainCam.transform.localPosition = new Vector3(2.5f,0.5f, -3);
+            crosshair.SetActive(true);
+          
         }
         else {
             mainCam.transform.localPosition = new Vector3(0f,0.5f, -5);
+            crosshair.SetActive(false);
         }
+
 
 
         
