@@ -117,7 +117,7 @@ public class PlayerMovement : MonoBehaviour
         }
         if (rightClick)
         {
-            mainCam.transform.localPosition = new Vector3(2.5f,0.5f, -3);
+            mainCam.transform.localPosition = new Vector3(1.5f,0.5f, -3);
             crosshair.SetActive(true);
             //Vertical Rotation of the camera
             rotateAmount += Input.GetAxis("Mouse Y") * Time.deltaTime * senseY;
