@@ -27,7 +27,7 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        mainCam = Camera.main; 
+        mainCam = Camera.main;
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
     }
@@ -35,7 +35,7 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
         //MOVEMENT
 
         float x = Input.GetAxis("Horizontal") * Time.deltaTime * speed;
@@ -45,7 +45,7 @@ public class PlayerMovement : MonoBehaviour
 
         //Local Rotation
 
-        transform.Rotate(Vector3.up * Input.GetAxis("Mouse X") * Time.deltaTime * senseX);    
+        transform.Rotate(Vector3.up * Input.GetAxis("Mouse X") * Time.deltaTime * senseX);
 
         //Jump
 
@@ -100,25 +100,23 @@ public class PlayerMovement : MonoBehaviour
 
 
     public void Shoot()
-    {Debug.Log("while");
+    { 
 
-        if (Input.GetKeyDown("Fire2"))
+        if (Input.GetKeyDown("mouse 1"))
         {
-            Debug.Log("true");
             rightClick = true;
-            //mainCam.transform.position = new Vector2(2.5f, -3);
         } 
-        if (Input.GetKeyUp("Fire2"))
+        if (Input.GetKeyUp("mouse 1"))
         {
-            Debug.Log("false");
             rightClick = false;
         }
         if (rightClick)
         {
-            mainCam.transform.position = new Vector2(2.5f, -3);
+           
+            mainCam.transform.localPosition = new Vector3(2.5f,0.5f, -3);
         }
         else {
-            mainCam.transform.position = new Vector2(0.5f, -5);
+            mainCam.transform.localPosition = new Vector3(0f,0.5f, -5);
         }
 
 
