@@ -25,6 +25,9 @@ public class PlayerMovement : MonoBehaviour
 
     Camera mainCam;
     public GameObject crosshair;
+    public Transform firepointTransform;
+    public GameObject bulletPrefab;
+
 
     private Rigidbody rb;
 
@@ -34,7 +37,7 @@ public class PlayerMovement : MonoBehaviour
         mainCam = Camera.main;
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
-       
+
     }
 
     // Update is called once per frame
@@ -99,43 +102,46 @@ public class PlayerMovement : MonoBehaviour
         Quaternion toRotation = Quaternion.FromToRotation(transform.up, Groundnormal) * transform.rotation;
         transform.rotation = toRotation;
 
-        
+
         Shoot();
     }
 
 
     public void Shoot()
-    { 
+    {
 
         if (Input.GetKeyDown("mouse 1"))
         {
             rightClick = true;
-        } 
+        }
         if (Input.GetKeyUp("mouse 1"))
         {
             rightClick = false;
         }
         if (rightClick)
         {
-            mainCam.transform.localPosition = new Vector3(1.5f,0.5f, -3);
+            mainCam.transform.localPosition = new Vector3(1.5f, 0.5f, -3);
             crosshair.SetActive(true);
             //Vertical Rotation of the camera
             rotateAmount += Input.GetAxis("Mouse Y") * Time.deltaTime * senseY;
             rotateAmount = Mathf.Clamp(rotateAmount, -20, 16);
             mainCam.transform.localEulerAngles = Vector3.left * rotateAmount;
 
+
+            if (Input.GetKeyDown("mouse 0"))
+            {
+                GameObject bullet = Instantiate(bulletPrefab, firepointTransform);
+            }
+           
         }
-        else {
-            mainCam.transform.localPosition = new Vector3(0f,0.5f, -5);
-            mainCam.transform.localEulerAngles = new Vector3(10,0,0);
-            rotateAmount = 0f;
-            crosshair.SetActive(false);
-        }
+        else
+            {
+                mainCam.transform.localPosition = new Vector3(0f, 0.5f, -5);
+                mainCam.transform.localEulerAngles = new Vector3(10, 0, 0);
+                rotateAmount = 0f;
+                crosshair.SetActive(false);
+            }
 
 
-
-        
     }
-
- 
 }
