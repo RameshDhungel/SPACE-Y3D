@@ -127,6 +127,8 @@ public class PlayerMovement : MonoBehaviour
         }
         else {
             mainCam.transform.localPosition = new Vector3(0f,0.5f, -5);
+            mainCam.transform.localEulerAngles = new Vector3(10,0,0);
+            rotateAmount = 0f;
             crosshair.SetActive(false);
         }
 
