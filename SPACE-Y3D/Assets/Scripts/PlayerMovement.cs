@@ -18,7 +18,9 @@ public class PlayerMovement : MonoBehaviour
 
     float distanceToGround;
     Vector3 Groundnormal;
-    float senseX = 100;
+    float senseX = 300;
+    float senseY = 300;
+    float rotateAmount;
     bool rightClick = false;
 
     Camera mainCam;
@@ -97,7 +99,7 @@ public class PlayerMovement : MonoBehaviour
         Quaternion toRotation = Quaternion.FromToRotation(transform.up, Groundnormal) * transform.rotation;
         transform.rotation = toRotation;
 
-
+        
         Shoot();
     }
 
@@ -117,7 +119,11 @@ public class PlayerMovement : MonoBehaviour
         {
             mainCam.transform.localPosition = new Vector3(2.5f,0.5f, -3);
             crosshair.SetActive(true);
-          
+            //Vertical Rotation of the camera
+            rotateAmount += Input.GetAxis("Mouse Y") * Time.deltaTime * senseY;
+            rotateAmount = Mathf.Clamp(rotateAmount, -20, 16);
+            mainCam.transform.localEulerAngles = Vector3.left * rotateAmount;
+
         }
         else {
             mainCam.transform.localPosition = new Vector3(0f,0.5f, -5);
