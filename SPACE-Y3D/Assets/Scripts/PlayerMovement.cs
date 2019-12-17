@@ -25,8 +25,9 @@ public class PlayerMovement : MonoBehaviour
 
     Camera mainCam;
     public GameObject crosshair;
-    public Transform firepointTransform;
+    public Transform firepoint;
     public GameObject bulletPrefab;
+    public Transform weapon;
 
 
     private Rigidbody rb;
@@ -122,15 +123,19 @@ public class PlayerMovement : MonoBehaviour
         {
             mainCam.transform.localPosition = new Vector3(1.5f, 0.5f, -3);
             crosshair.SetActive(true);
+
             //Vertical Rotation of the camera
             rotateAmount += Input.GetAxis("Mouse Y") * Time.deltaTime * senseY;
             rotateAmount = Mathf.Clamp(rotateAmount, -20, 16);
             mainCam.transform.localEulerAngles = Vector3.left * rotateAmount;
 
+            //Firepoint follows crosshair
+            weapon.eulerAngles = Vector3.forward * rotateAmount;
+
 
             if (Input.GetKeyDown("mouse 0"))
             {
-                GameObject bullet = Instantiate(bulletPrefab, firepointTransform);
+                GameObject bullet = Instantiate(bulletPrefab, firepoint.position, firepoint.rotation);
             }
            
         }
