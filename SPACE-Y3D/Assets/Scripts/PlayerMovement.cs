@@ -54,7 +54,8 @@ public class PlayerMovement : MonoBehaviour
 
         //Local Rotation
 
-        transform.Rotate(Vector3.up * Input.GetAxis("Mouse X") * Time.deltaTime * senseX);
+        //transform.localRotate(Vector3.up * Input.GetAxis("Mouse X") * Time.deltaTime * senseX);
+        transform.localEulerAngles += (Vector3.up * Input.GetAxis("Mouse X") * Time.deltaTime * senseX);
 
         //Jump
 
@@ -130,7 +131,11 @@ public class PlayerMovement : MonoBehaviour
             mainCam.transform.localEulerAngles = Vector3.left * rotateAmount;
 
             //Firepoint follows crosshair
-            weapon.eulerAngles = Vector3.forward * rotateAmount;
+            //weapon.eulerAngles = Vector3.up * -10;
+            //weapon.rotation = new Quaternion(0, 90, mainCam.transform.rotation.x, 1);
+            //weapon.rotation = mainCam.transform.localEulerAngles;
+
+
 
 
             if (Input.GetKeyDown("mouse 0"))
