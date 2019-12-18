@@ -133,7 +133,7 @@ public class PlayerMovement : MonoBehaviour
             mousePos = mainCam.transform.localEulerAngles;
 
             //Firepoint follows crosshair
-            weapon.transform.localEulerAngles = Vector3.left * rotateAmount;
+            weapon.transform.localEulerAngles = Vector3.left * (rotateAmount+1);
             //weapon.rotation = new Quaternion(0, 90, mainCam.transform.rotation.x, 1);
             //weapon.rotation = mainCam.transform.localEulerAngles;
             
