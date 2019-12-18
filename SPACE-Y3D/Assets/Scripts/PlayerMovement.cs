@@ -28,6 +28,7 @@ public class PlayerMovement : MonoBehaviour
     public Transform firepoint;
     public GameObject bulletPrefab;
     public Transform weapon;
+    private Vector3 mousePos; 
 
 
     private Rigidbody rb;
@@ -52,7 +53,7 @@ public class PlayerMovement : MonoBehaviour
 
         transform.Translate(x, 0, z);
 
-        //Local Rotation
+        //Local Rotation x axis
 
         //transform.localRotate(Vector3.up * Input.GetAxis("Mouse X") * Time.deltaTime * senseX);
         transform.localEulerAngles += (Vector3.up * Input.GetAxis("Mouse X") * Time.deltaTime * senseX);
@@ -129,11 +130,13 @@ public class PlayerMovement : MonoBehaviour
             rotateAmount += Input.GetAxis("Mouse Y") * Time.deltaTime * senseY;
             rotateAmount = Mathf.Clamp(rotateAmount, -20, 16);
             mainCam.transform.localEulerAngles = Vector3.left * rotateAmount;
+            mousePos = mainCam.transform.localEulerAngles;
 
             //Firepoint follows crosshair
-            //weapon.eulerAngles = Vector3.up * -10;
+            weapon.transform.localEulerAngles = Vector3.left * rotateAmount;
             //weapon.rotation = new Quaternion(0, 90, mainCam.transform.rotation.x, 1);
             //weapon.rotation = mainCam.transform.localEulerAngles;
+            
 
 
 
