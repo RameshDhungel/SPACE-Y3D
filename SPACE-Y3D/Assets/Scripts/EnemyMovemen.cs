@@ -10,6 +10,9 @@ public class EnemyMovemen : MonoBehaviour
     Rigidbody enemyRb;
     Vector3 distance;
     float magDistance;
+    public GameObject bulletPrefab;
+    private float waitTime = 1.5f;
+    private float timeCounter = 0;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,14 +24,28 @@ public class EnemyMovemen : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        distance = player.transform.position - Enemy.transform.position;
+        distance =  Enemy.transform.position - player.transform.position;
         //Debug.Log(distance.x + " " + distance.y + " " + distance.z);
         magDistance = distance.magnitude;
-        Debug.Log("outside " + magDistance);
-        if (magDistance > 2)
+        //Debug.Log("outside " + magDistance);
+        if (magDistance > 3)
         {
-            Debug.Log("inside if" + magDistance);
-            Enemy.transform.position = Vector3.MoveTowards(transform.position, distance, moveSpeed * Time.deltaTime);
+           // Debug.Log("inside if" + magDistance);
+            Enemy.transform.position = Vector3.MoveTowards(transform.position, -distance, moveSpeed * Time.deltaTime);
+            Enemy.transform.LookAt(player.transform);
+            
+        }if(magDistance < 3)
+        {
+            if (timeCounter < Time.time)
+            {
+                Debug.Log("in here");
+                EnemyShoot();
+                timeCounter = waitTime + Time.time;
+            }
         }
+    }
+    public void EnemyShoot()
+    {
+        Instantiate(bulletPrefab);
     }
 }
