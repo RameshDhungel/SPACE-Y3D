@@ -7,6 +7,8 @@ public class PlayerHealth : MonoBehaviour
     public int healthStart = 100;
     public int currentHealth;
     PlayerMovement playerMov;
+    [SerializeField]
+    private float giveDamage = 20f;
     
     bool isDead;
     bool damage;
@@ -49,6 +51,10 @@ public class PlayerHealth : MonoBehaviour
         }
 
 
+    }
+    public float GiveDamage()
+    {
+        return giveDamage;
     }
 
 }

@@ -10,7 +10,6 @@ public class Enemy : MonoBehaviour
     
     void Start()
     {
-        Debug.Log(health);
     }
 
    
@@ -30,6 +29,7 @@ public class Enemy : MonoBehaviour
             health -= damage;
         }
         
+        Debug.Log(health);
     }
     public float DealDamage()
     {
