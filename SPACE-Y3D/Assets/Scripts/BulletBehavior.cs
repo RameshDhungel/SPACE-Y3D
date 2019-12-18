@@ -12,6 +12,13 @@ public class BulletBehavior : MonoBehaviour
         rb = this.gameObject.GetComponent<Rigidbody>();
         rb.velocity = transform.forward * speed;
     }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.collider.tag == "Enemy")
+        {
+            collision.collider.GetComponent<Enemy>().TakeDamage(60f);
+        }
+    }
 
-  
+
 }
