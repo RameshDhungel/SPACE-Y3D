@@ -103,7 +103,7 @@ public class PlayerMovement : MonoBehaviour
         //
 
         Quaternion toRotation = Quaternion.FromToRotation(transform.up, Groundnormal) * transform.rotation;
-        transform.rotation = toRotation;
+        transform.rotation = toRotation; 
 
 
         Shoot();
