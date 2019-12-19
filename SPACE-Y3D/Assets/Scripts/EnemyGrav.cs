@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnemyGrav : MonoBehaviour
 {
 
-    public GameObject Planet;
+    private GameObject Planet;
     public GameObject PlayerPlaceholder;
 
     float gravity = 100;
@@ -21,6 +21,7 @@ public class EnemyGrav : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
+        Planet = GameObject.FindGameObjectWithTag("Planet");
     }
     void Update()
     {
