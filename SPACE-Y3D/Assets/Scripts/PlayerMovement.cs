@@ -144,6 +144,7 @@ public class PlayerMovement : MonoBehaviour
             if (Input.GetKeyDown("mouse 0"))
             {
                 GameObject bullet = Instantiate(bulletPrefab, firepoint.position, firepoint.rotation);
+                bullet.tag = "EnemyBullet";
             }
            
         }

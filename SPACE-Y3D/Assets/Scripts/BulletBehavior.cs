@@ -8,6 +8,8 @@ public class BulletBehavior : MonoBehaviour
     Rigidbody rb;
     
     GameObject player;
+    public float Enemydamage;
+    
     void Start()
     {
         //this.gameObject.GetComponent<Rigidbody>().AddForce(Vector3.forward*1000);
@@ -23,6 +25,14 @@ public class BulletBehavior : MonoBehaviour
             float damage = player.GetComponent<PlayerHealth>().GiveDamage();
             collision.collider.GetComponent<Enemy>().TakeDamage(damage);
             
+        }
+        if (collision.collider.tag == "Player")
+        {
+
+            Debug.Log(Enemydamage);
+            Debug.Log("collision");
+            collision.collider.GetComponent<PlayerHealth>().TakeDamage(Enemydamage);
+
         }
         Destroy(this.gameObject);
     }

@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour
 {
-    public int healthStart = 100;
-    public int currentHealth;
+    public float healthStart = 100;
+    public float currentHealth;
     PlayerMovement playerMov;
     [SerializeField]
     private float giveDamage = 20f;
     
-    bool isDead;
+    bool isDead = false;
     bool damage;
     void Start()
     {
@@ -21,24 +21,28 @@ public class PlayerHealth : MonoBehaviour
     void Update()
     {
         //once damage take damage
-        if (damage)
-        {
-            TakeDamage();
-        }
+        //if (damage)
+        //{
+        //    TakeDamage();
+        //}
 
-        damage = false;
+        //damage = false;
     }
 
-    public void TakeDamage()
+    public void TakeDamage(float takenDamage)
     {
         //subtract the currentHelath by the healthStart
+        Debug.Log("in here playerMethod");
         damage = true;
-        currentHealth -= healthStart;
+        currentHealth -= takenDamage;
 
-        if(currentHealth <= 0 && !isDead)
+        if(currentHealth <= 0)
         {
+            Debug.Log("dead");
             Death();
+            isDead = true;
         }
+        Debug.Log("Player health " + currentHealth);
     }
 
    public void Death()
