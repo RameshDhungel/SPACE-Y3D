@@ -6,7 +6,7 @@ public class PlayerHealth : MonoBehaviour
 {
     public float healthStart = 100;
     public float currentHealth;
-    PlayerMovement playerMov;
+    PlayerController playerMov;
     [SerializeField]
     private float giveDamage = 20f;
     
@@ -14,7 +14,7 @@ public class PlayerHealth : MonoBehaviour
     bool damage;
     void Start()
     {
-        playerMov = GetComponent<PlayerMovement>();
+        playerMov = GetComponent<PlayerController>();
         currentHealth = healthStart; 
     }
 

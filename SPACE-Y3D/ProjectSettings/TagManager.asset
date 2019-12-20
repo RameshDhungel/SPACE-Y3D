@@ -8,6 +8,7 @@ TagManager:
   - Enemy
   - EnemyBullet
   - Planet
+  - Weapon
   layers:
   - Default
   - TransparentFX

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
     public GameObject Planet;
     public GameObject PlayerPlaceholder;
@@ -28,7 +28,9 @@ public class PlayerMovement : MonoBehaviour
     public Transform firepoint;
     public GameObject bulletPrefab;
     public Transform weapon;
-    private Vector3 mousePos; 
+    private Vector3 mousePos;
+    private bool pickupRange;
+    GameObject pickUpWeapon;
 
 
     private Rigidbody rb;
@@ -107,6 +109,10 @@ public class PlayerMovement : MonoBehaviour
 
 
         Shoot();
+        if(pickupRange && pickUpWeapon != null)
+        {
+            PickUpItems(pickUpWeapon);
+        }
     }
 
 
@@ -158,4 +164,42 @@ public class PlayerMovement : MonoBehaviour
 
 
     }
+    public void PickUpItems(GameObject weapon)
+    {
+        Debug.Log("pickup");
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            Debug.Log("f");
+            GameObject currentWeapon = this.gameObject.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject;
+            Destroy(weapon.GetComponent<BoxCollider>());
+            Destroy(weapon.GetComponent<Rigidbody>());
+            weapon.transform.SetParent(transform.GetChild(0).transform);
+            weapon.transform.position = currentWeapon.transform.position;
+            weapon.transform.rotation = currentWeapon.transform.rotation;
+            this.weapon = transform.GetChild(0).transform.GetChild(0).transform;
+            firepoint = transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).transform;
+            currentWeapon.SetActive(false);
+
+
+
+
+        }
+    }
+    private void OnTriggerEnter(Collider collision)
+    {
+        if (collision.gameObject.tag == "Weapon")
+        {
+            pickUpWeapon = collision.gameObject;
+            pickupRange = true;
+        }
+    }
+    private void OnTriggerExit(Collider collision)
+    {
+        if (collision.gameObject.tag == "Weapon")
+        {
+            pickUpWeapon = null;
+            pickupRange = false;
+        }
+    }
+
 }
