@@ -7,42 +7,30 @@ public class PlayerController : MonoBehaviour
 {
     public GameObject Planet;
     public GameObject PlayerPlaceholder;
+    GameObject pickUpWeapon;
+    private Rigidbody rb;
 
 
     public float speed = 4;
     public float JumpHeight = 1.2f;
-
-    float gravity = 100;
-    bool OnGround = false;
-
-
     float distanceToGround;
-    Vector3 Groundnormal;
+    float gravity = 100;
     float senseX = 300;
     float senseY = 300;
-    float rotateAmount;
-    bool rightClick = false;
 
-    Camera mainCam;
-    public GameObject crosshair;
-    public Transform firepoint;
-    public GameObject bulletPrefab;
-    public GameObject rocketPrefab;
-    public Transform weapon;
-    private Vector3 mousePos;
+    bool OnGround = false;
     private bool pickupRange;
-    GameObject pickUpWeapon;
 
+    Vector3 Groundnormal;
 
-    private Rigidbody rb;
+    Shooting shootingScript;
 
-    // Start is called before the first frame update
     void Start()
     {
-        mainCam = Camera.main;
+       
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
-
+        shootingScript = FindObjectOfType<Shooting>();
     }
 
     // Update is called once per frame
@@ -109,70 +97,13 @@ public class PlayerController : MonoBehaviour
         transform.rotation = toRotation; 
 
 
-        Shoot();
+        
         if(pickupRange && pickUpWeapon != null)
         {
             PickUpItems(pickUpWeapon);
         }
     }
 
-
-    public void Shoot()
-    {
-
-        if (Input.GetKeyDown("mouse 1"))
-        {
-            rightClick = true;
-        }
-        if (Input.GetKeyUp("mouse 1"))
-        {
-            rightClick = false;
-        }
-        if (rightClick)
-        {
-            mainCam.transform.localPosition = new Vector3(1.5f, 0.5f, -3);
-            crosshair.SetActive(true);
-
-            //Vertical Rotation of the camera
-            rotateAmount += Input.GetAxis("Mouse Y") * Time.deltaTime * senseY;
-            rotateAmount = Mathf.Clamp(rotateAmount, -20, 16);
-            mainCam.transform.localEulerAngles = Vector3.left * rotateAmount;
-            mousePos = mainCam.transform.localEulerAngles;
-
-            //Firepoint follows crosshair
-            weapon.transform.localEulerAngles = Vector3.left * (rotateAmount+1);
-            //weapon.rotation = new Quaternion(0, 90, mainCam.transform.rotation.x, 1);
-            //weapon.rotation = mainCam.transform.localEulerAngles;
-            
-
-
-
-
-            if (Input.GetKeyDown("mouse 0"))
-            {
-                if (weapon.name != "Rocketlauncher")
-                {
-                    GameObject bullet = Instantiate(bulletPrefab, firepoint.position, firepoint.rotation);
-                }
-                else
-                {
-                    GameObject rocket = Instantiate(rocketPrefab, firepoint.position, firepoint.rotation);
-                }
-                
-                
-            }
-           
-        }
-        else
-            {
-                mainCam.transform.localPosition = new Vector3(0f, 0.5f, -5);
-                mainCam.transform.localEulerAngles = new Vector3(10, 0, 0);
-                rotateAmount = 0f;
-                crosshair.SetActive(false);
-            }
-
-
-    }
     public void PickUpItems(GameObject weapon)
     {
         Debug.Log("pickup");
@@ -191,8 +122,10 @@ public class PlayerController : MonoBehaviour
             weapon.transform.SetParent(transform.GetChild(0).transform); // set picked up weapon transfrom player child 
             weapon.transform.position = currentWeapon.transform.position;
             weapon.transform.rotation = currentWeapon.transform.rotation;
-            this.weapon = transform.GetChild(0).transform.GetChild(0).transform;
-            firepoint = transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).transform;
+
+            shootingScript.weapon = transform.GetChild(0).transform.GetChild(0).transform;
+
+            shootingScript.firepoint = transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).transform;
             //currentWeapon.SetActive(false);
 
 

@@ -505,6 +505,7 @@ GameObject:
   - component: {fileID: 881329022}
   - component: {fileID: 881329016}
   - component: {fileID: 881329023}
+  - component: {fileID: 881329024}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -528,13 +529,6 @@ MonoBehaviour:
   PlayerPlaceholder: {fileID: 881329015}
   speed: 4
   JumpHeight: 1.2
-  crosshair: {fileID: 70337619}
-  firepoint: {fileID: 887390288}
-  bulletPrefab: {fileID: 7382054199495066622, guid: 9e8a6c94390f1a24eb88f185e8a4c635,
-    type: 3}
-  rocketPrefab: {fileID: 1388864964794318338, guid: 57e21a1e7cd92a7479a3903957585e75,
-    type: 3}
-  weapon: {fileID: 563041479}
 --- !u!54 &881329017
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -655,6 +649,25 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 2
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &881329024
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 881329015}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb5d51f3a60a0b74d9680503da357675, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  firepoint: {fileID: 887390288}
+  weapon: {fileID: 563041479}
+  bulletPrefab: {fileID: 7382054199495066622, guid: 9e8a6c94390f1a24eb88f185e8a4c635,
+    type: 3}
+  crosshair: {fileID: 70337619}
+  rocketPrefab: {fileID: 1388864964794318338, guid: 57e21a1e7cd92a7479a3903957585e75,
+    type: 3}
 --- !u!1 &887390287
 GameObject:
   m_ObjectHideFlags: 0
