@@ -14,7 +14,7 @@ public class PlayerController : MonoBehaviour
     public float speed = 4;
     public float JumpHeight = 1.2f;
     float distanceToGround;
-    float gravity = 100;
+    float gravity = 10000;
     float senseX = 300;
     float senseY = 300;
 
@@ -83,14 +83,7 @@ public class PlayerController : MonoBehaviour
 
         //GRAVITY and ROTATION
 
-        Vector3 gravDirection = (transform.position - Planet.transform.position).normalized;
-
-        if (OnGround == false)
-        {
-            rb.AddForce(gravDirection * -gravity);
-
-        }
-
+       
         //
 
         Quaternion toRotation = Quaternion.FromToRotation(transform.up, Groundnormal) * transform.rotation;
@@ -102,6 +95,20 @@ public class PlayerController : MonoBehaviour
         {
             PickUpItems(pickUpWeapon);
         }
+    }
+    private void FixedUpdate()
+    {
+        Vector3 gravDirection = (transform.position - Planet.transform.position).normalized;
+
+        if (OnGround == false)
+        {
+            rb.AddForce(gravDirection * -gravity * Time.fixedDeltaTime);
+            Debug.Log("after" + gravDirection * -gravity * Time.fixedDeltaTime);
+            Debug.Log("before" + gravDirection * -gravity);
+
+
+        }
+
     }
 
     public void PickUpItems(GameObject weapon)

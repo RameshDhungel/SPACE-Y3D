@@ -14,7 +14,7 @@ public class BulletBehavior : MonoBehaviour
     {
         //this.gameObject.GetComponent<Rigidbody>().AddForce(Vector3.forward*1000);
         rb = this.gameObject.GetComponent<Rigidbody>();
-        rb.velocity = transform.forward * speed*Time.deltaTime;
+        rb.velocity = transform.forward * speed*Time.fixedDeltaTime;
         player = GameObject.Find("Player");
         
     }

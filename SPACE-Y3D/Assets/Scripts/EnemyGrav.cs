@@ -53,7 +53,7 @@ public class EnemyGrav : MonoBehaviour
 
         if (OnGround == false)
         {
-            rb.AddForce(gravDirection* -gravity);
+            rb.AddForce(gravDirection* -gravity * Time.deltaTime);
 
         }
 
