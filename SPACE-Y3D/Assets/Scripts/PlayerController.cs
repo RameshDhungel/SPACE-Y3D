@@ -27,7 +27,7 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-       
+        Cursor.lockState = CursorLockMode.Locked;  
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
         shootingScript = FindObjectOfType<Shooting>();
