@@ -49,16 +49,6 @@ public class PlayerController : MonoBehaviour
         //transform.localRotate(Vector3.up * Input.GetAxis("Mouse X") * Time.deltaTime * senseX);
         transform.localEulerAngles += (Vector3.up * Input.GetAxis("Mouse X") * Time.deltaTime * senseX);
 
-        //Jump
-
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            rb.AddForce(transform.up * 40000 * JumpHeight * Time.deltaTime);
-
-        }
-
-
-
         //GroundControl
 
         RaycastHit hit = new RaycastHit();
@@ -68,7 +58,7 @@ public class PlayerController : MonoBehaviour
             distanceToGround = hit.distance;
             Groundnormal = hit.normal;
 
-            if (distanceToGround <= 0.2f)
+            if (distanceToGround <= 1.2f)
             {
                 OnGround = true;
             }
@@ -77,6 +67,16 @@ public class PlayerController : MonoBehaviour
                 OnGround = false;
             }
 
+
+        }
+        //Jump
+        Debug.Log(OnGround);
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            if (OnGround)
+            {
+                rb.AddForce(transform.up * 200000 * JumpHeight * Time.deltaTime);
+            }
 
         }
 
@@ -103,9 +103,7 @@ public class PlayerController : MonoBehaviour
         if (OnGround == false)
         {
             rb.AddForce(gravDirection * -gravity * Time.fixedDeltaTime);
-            Debug.Log("after" + gravDirection * -gravity * Time.fixedDeltaTime);
-            Debug.Log("before" + gravDirection * -gravity);
-
+           
 
         }
 
