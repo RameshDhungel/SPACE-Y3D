@@ -9,6 +9,7 @@ TagManager:
   - EnemyBullet
   - Planet
   - Weapon
+  - Rocketlauncher
   layers:
   - Default
   - TransparentFX

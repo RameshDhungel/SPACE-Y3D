@@ -27,6 +27,7 @@ public class PlayerController : MonoBehaviour
     public GameObject crosshair;
     public Transform firepoint;
     public GameObject bulletPrefab;
+    public GameObject rocketPrefab;
     public Transform weapon;
     private Vector3 mousePos;
     private bool pickupRange;
@@ -149,7 +150,15 @@ public class PlayerController : MonoBehaviour
 
             if (Input.GetKeyDown("mouse 0"))
             {
-                GameObject bullet = Instantiate(bulletPrefab, firepoint.position, firepoint.rotation);
+                if (weapon.name != "Rocketlauncher")
+                {
+                    GameObject bullet = Instantiate(bulletPrefab, firepoint.position, firepoint.rotation);
+                }
+                else
+                {
+                    GameObject rocket = Instantiate(rocketPrefab, firepoint.position, firepoint.rotation);
+                }
+                
                 
             }
            
@@ -171,14 +180,20 @@ public class PlayerController : MonoBehaviour
         {
             Debug.Log("f");
             GameObject currentWeapon = this.gameObject.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject;
-            Destroy(weapon.GetComponent<BoxCollider>());
-            Destroy(weapon.GetComponent<Rigidbody>());
-            weapon.transform.SetParent(transform.GetChild(0).transform);
+            currentWeapon.transform.parent = null; // Drops guns from player to the world
+            currentWeapon.AddComponent<Rigidbody>(); // adds rigidBody so it can fall with gravity
+            currentWeapon.AddComponent<BoxCollider>(); // adds boxcollider so it collids with the ground 
+
+
+            Destroy(weapon.GetComponent<BoxCollider>()); // Destorys the box collider of the weapon that just got picked up so player wont get stuck
+            Destroy(weapon.GetComponent<Rigidbody>()); // Destroys rigid body cuz we dont need gravity after player picks up weapon
+
+            weapon.transform.SetParent(transform.GetChild(0).transform); // set picked up weapon transfrom player child 
             weapon.transform.position = currentWeapon.transform.position;
             weapon.transform.rotation = currentWeapon.transform.rotation;
             this.weapon = transform.GetChild(0).transform.GetChild(0).transform;
             firepoint = transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).transform;
-            currentWeapon.SetActive(false);
+            //currentWeapon.SetActive(false);
 
 
 
