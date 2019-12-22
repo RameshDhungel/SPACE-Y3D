@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BulletBehavior : MonoBehaviour
 {
-    float speed = 100f;
+    float speed = 5000f;
     Rigidbody rb;
     
     GameObject player;
@@ -14,7 +14,7 @@ public class BulletBehavior : MonoBehaviour
     {
         //this.gameObject.GetComponent<Rigidbody>().AddForce(Vector3.forward*1000);
         rb = this.gameObject.GetComponent<Rigidbody>();
-        rb.velocity = transform.forward * speed;
+        rb.velocity = transform.forward * speed*Time.deltaTime;
         player = GameObject.Find("Player");
         
     }
