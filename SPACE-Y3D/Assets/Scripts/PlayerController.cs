@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
     float gravity = 10000;
     float senseX = 300;
     float senseY = 300;
+    bool jumping = false;
 
     bool OnGround = false;
     private bool pickupRange;
@@ -47,7 +48,7 @@ public class PlayerController : MonoBehaviour
         //Local Rotation x axis
 
         //transform.localRotate(Vector3.up * Input.GetAxis("Mouse X") * Time.deltaTime * senseX);
-        transform.localEulerAngles += (Vector3.up * Input.GetAxis("Mouse X") * Time.deltaTime * senseX);
+        transform.Rotate(Vector3.up * Input.GetAxis("Mouse X") * Time.deltaTime * senseX);
 
         //GroundControl
 
@@ -58,7 +59,7 @@ public class PlayerController : MonoBehaviour
             distanceToGround = hit.distance;
             Groundnormal = hit.normal;
 
-            if (distanceToGround <= 1.2f)
+            if (distanceToGround <= 0.2f)
             {
                 OnGround = true;
             }
@@ -67,24 +68,22 @@ public class PlayerController : MonoBehaviour
                 OnGround = false;
             }
 
-
-        }
-        //Jump
-        Debug.Log(OnGround);
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            if (OnGround)
+            /*if (distanceToGround <= 1.2f)
             {
-                rb.AddForce(transform.up * 200000 * JumpHeight * Time.deltaTime);
+                jumping = false;
             }
-
+            else
+            {
+                jumping = true;
+            }*/
         }
+
+
+        
 
 
         //GRAVITY and ROTATION
 
-       
-        //
 
         Quaternion toRotation = Quaternion.FromToRotation(transform.up, Groundnormal) * transform.rotation;
         transform.rotation = toRotation; 
@@ -107,6 +106,16 @@ public class PlayerController : MonoBehaviour
 
         }
 
+        //Jump
+        Debug.Log(jumping);
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            if (OnGround)
+            {
+                rb.AddForce(transform.up * 800000 * JumpHeight * Time.deltaTime);
+            }
+
+        }
     }
 
     public void PickUpItems(GameObject weapon)
