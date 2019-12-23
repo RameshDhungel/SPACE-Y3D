@@ -8,7 +8,7 @@ public class EnemyGrav : MonoBehaviour
     private GameObject Planet;
     public GameObject PlayerPlaceholder;
 
-    float gravity = 100;
+    float gravity = 10000;
     bool OnGround = false;
 
 
@@ -47,6 +47,14 @@ public class EnemyGrav : MonoBehaviour
         }
 
 
+
+        //
+
+        Quaternion toRotation = Quaternion.FromToRotation(transform.up, Groundnormal) * transform.rotation;
+transform.rotation = toRotation;   
+    }
+    private void FixedUpdate()
+    {
         //GRAVITY and ROTATION
 
         Vector3 gravDirection = (transform.position - Planet.transform.position).normalized;
@@ -56,11 +64,7 @@ public class EnemyGrav : MonoBehaviour
             rb.AddForce(gravDirection* -gravity * Time.deltaTime);
 
         }
-
-        //
-
-        Quaternion toRotation = Quaternion.FromToRotation(transform.up, Groundnormal) * transform.rotation;
-transform.rotation = toRotation;   
+        
     }
-    
+
 }

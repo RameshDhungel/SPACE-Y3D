@@ -1,11 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using System.IO;
 
 public class Shooting : MonoBehaviour
 {
     // Start is called before the first frame update
     private bool rightClick = false;
+    private bool emptyMag = false;
+   private float currentAmmo;
+   private float totalAmmo;
+    private float mag;
 
     private Vector3 mousePos;
 
@@ -16,6 +22,9 @@ public class Shooting : MonoBehaviour
     public GameObject bulletPrefab;
     public GameObject crosshair;
     public GameObject rocketPrefab;
+    public GameObject currentAmmoImg;
+    public GameObject totalAmmoImg;
+
 
     float rotateAmount;
     float senseY = 300;
@@ -23,6 +32,12 @@ public class Shooting : MonoBehaviour
     void Start()
     {
         mainCam = Camera.main;
+        mag = 40f;
+        currentAmmo = mag;
+        totalAmmo = 50f;
+        currentAmmoImg.GetComponent<Text>().text = currentAmmo.ToString();
+        totalAmmoImg.GetComponent<Text>().text = totalAmmo.ToString();
+
     }
 
    
@@ -58,7 +73,7 @@ public class Shooting : MonoBehaviour
             //weapon.rotation = new Quaternion(0, 90, mainCam.transform.rotation.x, 1);
             //weapon.rotation = mainCam.transform.localEulerAngles;
 
-            if (Input.GetKeyDown("mouse 0"))
+            if (Input.GetKeyDown("mouse 0") && !emptyMag)
             {
                 if (weapon.name != "Rocketlauncher")
                 {
@@ -67,6 +82,26 @@ public class Shooting : MonoBehaviour
                 else
                 {
                     GameObject rocket = Instantiate(rocketPrefab, firepoint.position, firepoint.rotation);
+                }
+
+                if (totalAmmo > 0 || currentAmmo > 0)
+                {
+                    if (currentAmmo > 0)
+                    {
+                        currentAmmo--;
+                        currentAmmoImg.GetComponent<Text>().text = currentAmmo.ToString();
+                    }
+                    else
+                    {
+                        currentAmmo = (totalAmmo - mag < 0) ? totalAmmo: mag;
+                        totalAmmo = (totalAmmo - mag < 0) ? 0: totalAmmo - mag;
+                        currentAmmoImg.GetComponent<Text>().text = currentAmmo.ToString();
+                        totalAmmoImg.GetComponent<Text>().text = totalAmmo.ToString();
+                    }
+                }
+                else
+                {
+                    emptyMag = true;
                 }
 
 
