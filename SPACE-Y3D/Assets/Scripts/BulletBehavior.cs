@@ -9,9 +9,16 @@ public class BulletBehavior : MonoBehaviour
     
     GameObject player;
     public float Enemydamage;
+    AudioScript audio;
     
+    private void Awake()
+    {
+    audio = FindObjectOfType<AudioScript>();
+        
+    }
     void Start()
     {
+        audio.GunShotSound();
         //this.gameObject.GetComponent<Rigidbody>().AddForce(Vector3.forward*1000);
         rb = this.gameObject.GetComponent<Rigidbody>();
         rb.velocity = transform.forward * speed*Time.fixedDeltaTime;

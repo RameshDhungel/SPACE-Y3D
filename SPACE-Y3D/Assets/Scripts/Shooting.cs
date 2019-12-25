@@ -25,6 +25,8 @@ public class Shooting : MonoBehaviour
     public GameObject currentAmmoImg;
     public GameObject totalAmmoImg;
 
+   
+
 
     float rotateAmount;
     float senseY = 300;
@@ -37,6 +39,7 @@ public class Shooting : MonoBehaviour
         totalAmmo = 50f;
         currentAmmoImg.GetComponent<Text>().text = currentAmmo.ToString();
         totalAmmoImg.GetComponent<Text>().text = totalAmmo.ToString();
+        
 
     }
 
@@ -75,6 +78,7 @@ public class Shooting : MonoBehaviour
 
             if (Input.GetKeyDown("mouse 0") && !emptyMag)
             {
+              
                 if (weapon.name != "Rocketlauncher")
                 {
                     GameObject bullet = Instantiate(bulletPrefab, firepoint.position, firepoint.rotation);
