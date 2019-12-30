@@ -7,8 +7,8 @@ public class PlayerHealth : MonoBehaviour
 {
     public float healthStart = 100;
     private static float currentHealth;
-    PlayerController playerMov;
-    public Slider healthSlider;
+    static PlayerController playerMov;
+    private GameObject healthSlider;
     [SerializeField]
     private float giveDamage = 20f;
     
@@ -17,19 +17,15 @@ public class PlayerHealth : MonoBehaviour
     bool damage;
     void Start()
     {
+        healthSlider = GameObject.Find("HealthSlider");
+        Debug.Log(healthSlider);
         playerMov = GetComponent<PlayerController>();
-        currentHealth = healthStart; 
+        currentHealth = healthStart;
     }
 
     void Update()
     {
-        //once damage take damage
-        //if (damage)
-        //{
-        //    TakeDamage();
-        //}
-
-        //damage = false;
+       
         if (currentHealth <= 0)
         {
             Death();
@@ -45,8 +41,8 @@ public class PlayerHealth : MonoBehaviour
         
         damage = true;
         currentHealth -= takenDamage;
-        healthSlider.value = (int)currentHealth;
-        Debug.Log("healthsilder"+ healthSlider.value);
+        Debug.Log(healthSlider);
+        healthSlider.GetComponent<Slider>().value = currentHealth;
         
     }
 
