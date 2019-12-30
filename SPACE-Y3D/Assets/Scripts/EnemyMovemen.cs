@@ -40,7 +40,7 @@ public class EnemyMovemen : MonoBehaviour
         {
             if (timeCounter < Time.time)
             {
-                Debug.Log("in here");
+                //Debug.Log("in here");
                 EnemyShoot();
                 timeCounter = waitTime + Time.time;
             }

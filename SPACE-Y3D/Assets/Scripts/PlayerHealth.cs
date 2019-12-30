@@ -1,14 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour
 {
     public float healthStart = 100;
-    public float currentHealth;
+    private static float currentHealth;
     PlayerController playerMov;
+    public Slider healthSlider;
     [SerializeField]
     private float giveDamage = 20f;
+    
     
     bool isDead = false;
     bool damage;
@@ -27,22 +30,24 @@ public class PlayerHealth : MonoBehaviour
         //}
 
         //damage = false;
+        if (currentHealth <= 0)
+        {
+            Death();
+            isDead = true;
+        }
+        
+        Debug.Log("in here playerMethod" + currentHealth);
     }
 
     public void TakeDamage(float takenDamage)
     {
-        //subtract the currentHelath by the healthStart
-        Debug.Log("in here playerMethod");
+
+        
         damage = true;
         currentHealth -= takenDamage;
-
-        if(currentHealth <= 0)
-        {
-            Debug.Log("dead");
-            Death();
-            isDead = true;
-        }
-        Debug.Log("Player health " + currentHealth);
+        healthSlider.value = (int)currentHealth;
+        Debug.Log("healthsilder"+ healthSlider.value);
+        
     }
 
    public void Death()

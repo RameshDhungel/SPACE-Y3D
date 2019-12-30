@@ -29,7 +29,7 @@ public class Enemy : MonoBehaviour
             health -= damage;
         }
         
-        Debug.Log(health);
+        //Debug.Log(health);
     }
     public float DealDamage()
     {

@@ -37,7 +37,7 @@ public class BulletBehavior : MonoBehaviour
         {
 
             Debug.Log(Enemydamage);
-            Debug.Log("collision");
+            //Debug.Log("collision");
             collision.collider.GetComponent<PlayerHealth>().TakeDamage(Enemydamage);
 
         }

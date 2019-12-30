@@ -107,7 +107,7 @@ public class PlayerController : MonoBehaviour
         }
 
         //Jump
-        Debug.Log(jumping);
+        //Debug.Log(jumping);
         if (Input.GetKeyDown(KeyCode.Space))
         {
             if (OnGround)
@@ -120,10 +120,10 @@ public class PlayerController : MonoBehaviour
 
     public void PickUpItems(GameObject weapon)
     {
-        Debug.Log("pickup");
+        //Debug.Log("pickup");
         if (Input.GetKeyDown(KeyCode.F))
         {
-            Debug.Log("f");
+            //Debug.Log("f");
             GameObject currentWeapon = this.gameObject.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject;
             currentWeapon.transform.parent = null; // Drops guns from player to the world
             currentWeapon.AddComponent<Rigidbody>(); // adds rigidBody so it can fall with gravity
