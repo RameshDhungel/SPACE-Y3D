@@ -8,11 +8,12 @@ public class Enemy : MonoBehaviour
     private float health = 50f;
     private float moveAmount;
     private float dealDamage = 20f;
-    public GameObject enemySlider;
+    public Slider enemySlider;
     
     void Start()
     {
-        enemySlider = GameObject.Find("EnemySlider");
+        enemySlider = this.gameObject.GetComponentInChildren<Slider>();
+        enemySlider.value = health;
     }
 
    
@@ -30,7 +31,7 @@ public class Enemy : MonoBehaviour
         else
         {
             health -= damage;
-            enemySlider.GetComponent<Slider>().value = health;
+            enemySlider.value = health;
         }
         
         //Debug.Log(health);
