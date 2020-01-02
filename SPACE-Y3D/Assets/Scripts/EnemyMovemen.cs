@@ -14,9 +14,13 @@ public class EnemyMovemen : MonoBehaviour
     private float waitTime = 1.5f;
     private float timeCounter = 0;
     public GameObject firePoint;
+
+    EnemyAudioScript enemyAudio;
     // Start is called before the first frame update
+
     void Start()
     {
+        enemyAudio = this.gameObject.GetComponent<EnemyAudioScript>();
         player = GameObject.Find("Player");
         Enemy = this.gameObject;
         enemyRb = this.gameObject.GetComponent<Rigidbody>();
@@ -48,7 +52,8 @@ public class EnemyMovemen : MonoBehaviour
     }
     public void EnemyShoot()
     {
-      GameObject bullet =  Instantiate(bulletPrefab, firePoint.transform.position, firePoint.transform.rotation);
+        GameObject bullet =  Instantiate(bulletPrefab, firePoint.transform.position, firePoint.transform.rotation);
         bullet.GetComponent<BulletBehavior>().Enemydamage = this.gameObject.GetComponent<Enemy>().DealDamage();
+        enemyAudio.PlayAudio();
     }
 }

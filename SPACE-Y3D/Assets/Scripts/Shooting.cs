@@ -27,6 +27,7 @@ public class Shooting : MonoBehaviour
     public GameObject totalAmmoImg;
 
     public Animator anim;
+    PlayerAudioScript playerAudio;
 
    
 
@@ -36,6 +37,7 @@ public class Shooting : MonoBehaviour
 
     void Start()
     {
+        playerAudio = this.gameObject.GetComponentInChildren<PlayerAudioScript>();
         mainCam = Camera.main;
         mag = 20f;
         currentAmmo = mag;
@@ -97,6 +99,7 @@ public class Shooting : MonoBehaviour
                 {
                     GameObject rocket = Instantiate(rocketPrefab, firepoint.position, firepoint.rotation);
                 }
+                playerAudio.PlayAudio();
 
                 if (totalAmmo > 0 || currentAmmo > 0)
                 {

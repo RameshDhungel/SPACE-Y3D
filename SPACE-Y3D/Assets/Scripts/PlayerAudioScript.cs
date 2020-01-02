@@ -2,13 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AudioScript : MonoBehaviour
+public class PlayerAudioScript : MonoBehaviour
 {
 
     public AudioSource AudioSource;
     public AudioClip degalClip;
-    
-    public void GunShotSound()
+
+    private void Start()
+    {
+       // AudioSource = this.gameObject.GetComponent<AudioSource>();
+    }
+    public void PlayAudio()
     {
         AudioSource.clip = degalClip;
         AudioSource.Play();
