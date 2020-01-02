@@ -9,8 +9,9 @@ public class Shooting : MonoBehaviour
     // Start is called before the first frame update
     private bool rightClick = false;
     private bool emptyMag = false;
-   private float currentAmmo;
-   private float totalAmmo;
+    private bool reloading = false;
+    private float currentAmmo;
+    private float totalAmmo;
     private float mag;
 
     private Vector3 mousePos;
@@ -25,6 +26,8 @@ public class Shooting : MonoBehaviour
     public GameObject currentAmmoImg;
     public GameObject totalAmmoImg;
 
+    public Animator anim;
+
    
 
 
@@ -34,7 +37,7 @@ public class Shooting : MonoBehaviour
     void Start()
     {
         mainCam = Camera.main;
-        mag = 40f;
+        mag = 20f;
         currentAmmo = mag;
         totalAmmo = 50f;
         currentAmmoImg.GetComponent<Text>().text = currentAmmo.ToString();
@@ -46,6 +49,13 @@ public class Shooting : MonoBehaviour
    
     void Update()
     {
+        currentAmmoImg.GetComponent<Text>().text = currentAmmo.ToString();
+        totalAmmoImg.GetComponent<Text>().text = totalAmmo.ToString();
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            Debug.Log("here");
+            StartCoroutine(Reload());
+        }
         Shoot();
     }
 
@@ -76,7 +86,7 @@ public class Shooting : MonoBehaviour
             //weapon.rotation = new Quaternion(0, 90, mainCam.transform.rotation.x, 1);
             //weapon.rotation = mainCam.transform.localEulerAngles;
 
-            if (Input.GetKeyDown("mouse 0") && !emptyMag)
+            if (Input.GetKeyDown("mouse 0") && !emptyMag && !reloading)
             {
               
                 if (weapon.name != "Rocketlauncher")
@@ -97,10 +107,8 @@ public class Shooting : MonoBehaviour
                     }
                     else
                     {
-                        currentAmmo = (totalAmmo - mag < 0) ? totalAmmo: mag;
-                        totalAmmo = (totalAmmo - mag < 0) ? 0: totalAmmo - mag;
-                        currentAmmoImg.GetComponent<Text>().text = currentAmmo.ToString();
-                        totalAmmoImg.GetComponent<Text>().text = totalAmmo.ToString();
+                        StartCoroutine(Reload());
+                        
                     }
                 }
                 else
@@ -121,6 +129,46 @@ public class Shooting : MonoBehaviour
         }
 
 
+    }
+
+    IEnumerator Reload()
+    {
+        anim.SetBool("isReloading", true);
+        reloading = true;
+        
+        yield return new WaitForSeconds(2f);
+        if(currentAmmo < 1)
+        {
+            float addingAmmoAmount = mag - currentAmmo;
+            if(totalAmmo >= addingAmmoAmount){
+                currentAmmo = mag;
+                totalAmmo -= addingAmmoAmount;
+            }
+            else
+            {
+                Debug.Log("here");
+                currentAmmo = currentAmmo+addingAmmoAmount;
+                totalAmmo = 0;
+            }
+        }
+        else
+        {
+            if((totalAmmo - mag) > 0)
+            {
+                currentAmmo = mag;
+                totalAmmo -= mag;
+            }
+            else
+            {
+                currentAmmo = mag;
+                totalAmmo = 0;
+            }
+        }
+        currentAmmoImg.GetComponent<Text>().text = currentAmmo.ToString();
+        totalAmmoImg.GetComponent<Text>().text = totalAmmo.ToString();
+
+        anim.SetBool("isReloading", false);
+        reloading = false;
     }
 
 }
