@@ -39,9 +39,9 @@ public class Shooting : MonoBehaviour
     {
         playerAudio = this.gameObject.GetComponentInChildren<PlayerAudioScript>();
         mainCam = Camera.main;
-        mag = 20f;
+        mag = 2f;
         currentAmmo = mag;
-        totalAmmo = 50f;
+        totalAmmo = 3f;
         currentAmmoImg.GetComponent<Text>().text = currentAmmo.ToString();
         totalAmmoImg.GetComponent<Text>().text = totalAmmo.ToString();
         
@@ -53,7 +53,7 @@ public class Shooting : MonoBehaviour
     {
         currentAmmoImg.GetComponent<Text>().text = currentAmmo.ToString();
         totalAmmoImg.GetComponent<Text>().text = totalAmmo.ToString();
-        if (Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.R) && totalAmmo > 0)
         {
             Debug.Log("here");
             StartCoroutine(Reload());
@@ -91,20 +91,24 @@ public class Shooting : MonoBehaviour
             if (Input.GetKeyDown("mouse 0") && !emptyMag && !reloading)
             {
               
-                if (weapon.name != "Rocketlauncher")
-                {
-                    GameObject bullet = Instantiate(bulletPrefab, firepoint.position, firepoint.rotation);
-                }
-                else
-                {
-                    GameObject rocket = Instantiate(rocketPrefab, firepoint.position, firepoint.rotation);
-                }
-                playerAudio.PlayAudio();
+                
 
                 if (totalAmmo > 0 || currentAmmo > 0)
                 {
                     if (currentAmmo > 0)
                     {
+                     
+                        if (weapon.name != "Rocketlauncher")
+                        {
+                            GameObject bullet = Instantiate(bulletPrefab, firepoint.position, firepoint.rotation);
+                        }
+                        else
+                        {
+                            GameObject rocket = Instantiate(rocketPrefab, firepoint.position, firepoint.rotation);
+                        }
+                        playerAudio.PlayAudio();
+                        Debug.Log(currentAmmo);
+                        Debug.Log(currentAmmo > 0);
                         currentAmmo--;
                         currentAmmoImg.GetComponent<Text>().text = currentAmmo.ToString();
                     }
@@ -140,32 +144,47 @@ public class Shooting : MonoBehaviour
         reloading = true;
         
         yield return new WaitForSeconds(2f);
-        if(currentAmmo < 1)
+        if (totalAmmo > 0 || currentAmmo > 0)
         {
-            float addingAmmoAmount = mag - currentAmmo;
-            if(totalAmmo >= addingAmmoAmount){
-                currentAmmo = mag;
-                totalAmmo -= addingAmmoAmount;
+            if (currentAmmo > 0)
+            {
+                Debug.Log("ammo in mag");
+                float addingAmmoAmount = mag - currentAmmo;
+                if (totalAmmo >= addingAmmoAmount)
+                {
+                    currentAmmo = mag;
+                    totalAmmo -= addingAmmoAmount;
+                }
+                else
+                {
+                    Debug.Log("here");
+                    currentAmmo = currentAmmo + totalAmmo;
+                    totalAmmo = 0;
+                }
             }
             else
             {
-                Debug.Log("here");
-                currentAmmo = currentAmmo+addingAmmoAmount;
-                totalAmmo = 0;
+                Debug.Log("empty");
+                if ((totalAmmo - mag) > 0)
+                {
+                    currentAmmo = mag;
+                    totalAmmo -= mag;
+                }
+                else if((totalAmmo - mag) < 0)
+                {
+                    currentAmmo = totalAmmo;
+                    totalAmmo = 0;
+                }
+                else
+                {
+                    currentAmmo = mag;
+                    totalAmmo = 0;
+                }
             }
         }
         else
         {
-            if((totalAmmo - mag) > 0)
-            {
-                currentAmmo = mag;
-                totalAmmo -= mag;
-            }
-            else
-            {
-                currentAmmo = mag;
-                totalAmmo = 0;
-            }
+            emptyMag = true;
         }
         currentAmmoImg.GetComponent<Text>().text = currentAmmo.ToString();
         totalAmmoImg.GetComponent<Text>().text = totalAmmo.ToString();
