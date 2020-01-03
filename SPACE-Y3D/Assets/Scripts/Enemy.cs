@@ -10,7 +10,8 @@ public class Enemy : MonoBehaviour
     private float moveAmount;
     private float dealDamage = 20f;
     public Image healthIMG;
-    
+    public GameObject magPrefab;
+
     void Start()
     {
         healthIMG = this.gameObject.transform.GetChild(1).GetChild(0).GetChild(0).GetComponent<Image>();
@@ -28,6 +29,9 @@ public class Enemy : MonoBehaviour
 
         if((currentHealth - damage) <= 0)
         {
+            GameObject mag = Instantiate(magPrefab);
+            mag.transform.position = this.gameObject.transform.localPosition;
+            mag.transform.parent = null;
             Destroy(this.gameObject);
         }
         else

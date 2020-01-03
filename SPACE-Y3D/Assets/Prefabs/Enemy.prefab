@@ -350,6 +350,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthIMG: {fileID: 0}
+  magPrefab: {fileID: 2685071939669765231, guid: 3f12aa50843dd0e448cf3c5cdbfe3984,
+    type: 3}
 --- !u!114 &192783796374198406
 MonoBehaviour:
   m_ObjectHideFlags: 0
