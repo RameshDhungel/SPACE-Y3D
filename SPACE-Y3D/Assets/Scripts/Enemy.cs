@@ -27,12 +27,22 @@ public class Enemy : MonoBehaviour
     public void TakeDamage(float damage)
     {
 
+
         if((currentHealth - damage) <= 0)
         {
-            GameObject mag = Instantiate(magPrefab);
-            mag.transform.position = this.gameObject.transform.localPosition;
-            mag.transform.parent = null;
+  
+            int randomNum = Random.Range(0, 5);
+            Debug.Log("number" + randomNum);
+            if(randomNum == 3)
+            {
+                GameObject mag = Instantiate(magPrefab);
+                mag.transform.position = this.gameObject.transform.localPosition;
+                mag.transform.parent = null;
+            }
+   
             Destroy(this.gameObject);
+
+
         }
         else
         {
