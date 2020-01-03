@@ -804,6 +804,8 @@ MonoBehaviour:
   Planet: {fileID: 1949071405}
   PlayerPlaceholder: {fileID: 881329015}
   speed: 4
+  normalSpeed: 4
+  runSpeed: 20
   JumpHeight: 1.2
 --- !u!54 &881329017
 Rigidbody:

@@ -11,7 +11,8 @@ public class PlayerController : MonoBehaviour
     private Rigidbody rb;
 
 
-    public float speed = 4;
+    public float speed = 4f;
+    bool running = false;
     public float JumpHeight = 1.2f;
     float distanceToGround;
     float gravity = 10000;
@@ -39,11 +40,20 @@ public class PlayerController : MonoBehaviour
     {
 
         //MOVEMENT
+        if(Input.GetKey (KeyCode.W) && Input.GetKey(KeyCode.LeftShift))
+        {
+            speed = 10f;
+        }
+        else
+        {
+            speed = 4f;
+        }
 
         float x = Input.GetAxis("Horizontal") * Time.deltaTime * speed;
         float z = Input.GetAxis("Vertical") * Time.deltaTime * speed;
 
         transform.Translate(x, 0, z);
+
 
         //Local Rotation x axis
 
