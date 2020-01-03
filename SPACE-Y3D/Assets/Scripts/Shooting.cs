@@ -12,6 +12,7 @@ public class Shooting : MonoBehaviour
     private bool reloading = false;
     private float currentAmmo;
     private float totalAmmo;
+    private float maxAmmo = 250f;
     private float mag;
 
     private Vector3 mousePos;
@@ -60,7 +61,18 @@ public class Shooting : MonoBehaviour
         }
         Shoot();
     }
-
+    public float GetTotalAmmo()
+    {
+        return totalAmmo;
+    }
+    public void SetTotalAmmo(float ammo)
+    {
+        totalAmmo += ammo;
+    }
+    public float GetMaxAmmo()
+    {
+        return maxAmmo;
+    }
     public void Shoot()
     {
 

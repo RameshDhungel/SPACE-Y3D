@@ -131,47 +131,52 @@ public class PlayerController : MonoBehaviour
     public void PickUpItems(GameObject weapon)
     {
         //Debug.Log("pickup");
-        if (Input.GetKeyDown(KeyCode.F))
+            if (Input.GetKeyDown(KeyCode.F) && weapon.tag == "Weapon")
+            {
+                //Debug.Log("f");
+                GameObject currentWeapon = this.gameObject.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject;
+                currentWeapon.transform.parent = null; // Drops guns from player to the world
+                currentWeapon.AddComponent<Rigidbody>(); // adds rigidBody so it can fall with gravity
+                currentWeapon.AddComponent<BoxCollider>(); // adds boxcollider so it collids with the ground 
+
+
+                Destroy(weapon.GetComponent<BoxCollider>()); // Destorys the box collider of the weapon that just got picked up so player wont get stuck
+                Destroy(weapon.GetComponent<Rigidbody>()); // Destroys rigid body cuz we dont need gravity after player picks up weapon
+
+                weapon.transform.SetParent(transform.GetChild(0).transform); // set picked up weapon transfrom player child 
+                weapon.transform.position = currentWeapon.transform.position;
+                weapon.transform.rotation = currentWeapon.transform.rotation;
+
+                shootingScript.weapon = transform.GetChild(0).transform.GetChild(0).transform;
+
+                shootingScript.firepoint = transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).transform;
+                //currentWeapon.SetActive(false);
+
+            }
+        
+        if(weapon.tag == "mag")
         {
-            //Debug.Log("f");
-            GameObject currentWeapon = this.gameObject.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject;
-            currentWeapon.transform.parent = null; // Drops guns from player to the world
-            currentWeapon.AddComponent<Rigidbody>(); // adds rigidBody so it can fall with gravity
-            currentWeapon.AddComponent<BoxCollider>(); // adds boxcollider so it collids with the ground 
-
-
-            Destroy(weapon.GetComponent<BoxCollider>()); // Destorys the box collider of the weapon that just got picked up so player wont get stuck
-            Destroy(weapon.GetComponent<Rigidbody>()); // Destroys rigid body cuz we dont need gravity after player picks up weapon
-
-            weapon.transform.SetParent(transform.GetChild(0).transform); // set picked up weapon transfrom player child 
-            weapon.transform.position = currentWeapon.transform.position;
-            weapon.transform.rotation = currentWeapon.transform.rotation;
-
-            shootingScript.weapon = transform.GetChild(0).transform.GetChild(0).transform;
-
-            shootingScript.firepoint = transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).transform;
-            //currentWeapon.SetActive(false);
-
-
-
-
+            float current = shootingScript.GetTotalAmmo() + 30;
+            if (current < shootingScript.GetMaxAmmo())
+            {
+                shootingScript.SetTotalAmmo(30);
+                Destroy(weapon);
+            }
         }
     }
     private void OnTriggerEnter(Collider collision)
     {
-        if (collision.gameObject.tag == "Weapon")
-        {
+      
             pickUpWeapon = collision.gameObject;
             pickupRange = true;
-        }
+      
     }
     private void OnTriggerExit(Collider collision)
     {
-        if (collision.gameObject.tag == "Weapon")
-        {
+      
             pickUpWeapon = null;
             pickupRange = false;
-        }
+    
     }
 
 }
