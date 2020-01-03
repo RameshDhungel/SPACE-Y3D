@@ -39,9 +39,9 @@ public class Shooting : MonoBehaviour
     {
         playerAudio = this.gameObject.GetComponentInChildren<PlayerAudioScript>();
         mainCam = Camera.main;
-        mag = 2f;
+        mag = 20f;
         currentAmmo = mag;
-        totalAmmo = 3f;
+        totalAmmo = 50f;
         currentAmmoImg.GetComponent<Text>().text = currentAmmo.ToString();
         totalAmmoImg.GetComponent<Text>().text = totalAmmo.ToString();
         
@@ -107,8 +107,6 @@ public class Shooting : MonoBehaviour
                             GameObject rocket = Instantiate(rocketPrefab, firepoint.position, firepoint.rotation);
                         }
                         playerAudio.PlayAudio();
-                        Debug.Log(currentAmmo);
-                        Debug.Log(currentAmmo > 0);
                         currentAmmo--;
                         currentAmmoImg.GetComponent<Text>().text = currentAmmo.ToString();
                     }

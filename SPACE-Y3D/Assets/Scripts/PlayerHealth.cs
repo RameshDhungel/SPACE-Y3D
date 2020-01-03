@@ -8,7 +8,8 @@ public class PlayerHealth : MonoBehaviour
     public float healthStart = 100;
     private static float currentHealth;
     static PlayerController playerMov;
-    private GameObject healthSlider;
+    private Image healthIMG;
+
     [SerializeField]
     private float giveDamage = 20f;
     
@@ -17,10 +18,11 @@ public class PlayerHealth : MonoBehaviour
     bool damage;
     void Start()
     {
-        healthSlider = GameObject.Find("HealthSlider");
-        Debug.Log(healthSlider);
+        healthIMG = GameObject.Find("PlayerHealthbarBackground").transform.GetChild(0).GetComponent<Image>();
         playerMov = GetComponent<PlayerController>();
         currentHealth = healthStart;
+        Debug.Log(healthIMG);
+        healthIMG.fillAmount = currentHealth / healthStart;
     }
 
     void Update()
@@ -41,8 +43,7 @@ public class PlayerHealth : MonoBehaviour
         
         damage = true;
         currentHealth -= takenDamage;
-        Debug.Log(healthSlider);
-        healthSlider.GetComponent<Slider>().value = currentHealth;
+        healthIMG.fillAmount = currentHealth / healthStart;
         
     }
 
