@@ -7,7 +7,9 @@ public class FlyingEnemyScript : MonoBehaviour
     public bool stopMovement;
     GameObject player;
     Vector3[] distance = new Vector3[4];
+    Vector3[] distanceToPlayer = new Vector3[4];
     float[] mag = new float[4];
+    float[] magPlayer = new float[4];
 
 
 
@@ -34,6 +36,8 @@ public class FlyingEnemyScript : MonoBehaviour
 
                 distance[0] = this.transform.position + transform.TransformDirection(Vector3.up) * 10;
                 mag[0] = distance[0].magnitude;
+                distanceToPlayer[0] = player.transform.position - distance[0];
+                magPlayer[0] = distanceToPlayer[0].magnitude;
             }
             if (!Physics.Raycast(transform.position, transform.TransformDirection(Vector3.Normalize(new Vector3(-45f, -45f, -45f))), 10))
             {
@@ -44,6 +48,9 @@ public class FlyingEnemyScript : MonoBehaviour
 
                 distance[1] = this.transform.position + transform.TransformDirection(Vector3.Normalize(new Vector3(-45f, -45f, -45f))) * 10;
                 mag[1] = distance[1].magnitude;
+                distanceToPlayer[1] = player.transform.position - distance[1];
+                magPlayer[1] = distanceToPlayer[1].magnitude;
+                Debug.Log(distance[1]);
             }
             if (!Physics.Raycast(transform.position, transform.TransformDirection(Vector3.Normalize(new Vector3(45f, 45f, 45f))), 10))
             {
@@ -52,6 +59,8 @@ public class FlyingEnemyScript : MonoBehaviour
 
                 distance[2] = this.transform.position + transform.TransformDirection(Vector3.Normalize(new Vector3(45f, 45f, 45f))) * 10;
                 mag[2] = distance[2].magnitude;
+                distanceToPlayer[2] = player.transform.position - distance[2];
+                magPlayer[2] = distanceToPlayer[2].magnitude;
             }
             if (!Physics.Raycast(transform.position, transform.TransformDirection(Vector3.right),10))
             {
@@ -60,16 +69,24 @@ public class FlyingEnemyScript : MonoBehaviour
 
                 distance[3] = this.transform.position + transform.TransformDirection(Vector3.right) * 10;
                 mag[3] = distance[3].magnitude;
+                distanceToPlayer[2] = player.transform.position - distance[2];
+                magPlayer[2] = distanceToPlayer[2].magnitude;
             }
 
-            float small = Mathf.Min(mag);
+            float small = Mathf.Min(magPlayer);
             Debug.Log(small);
             for (int i = 0; i < mag.Length; i++)
             {
-                if(small == mag[i])
+                if (small == magPlayer[i])
                 {
-                    MoveTowardsPlayer(mag[i], distance[i], 5);
+                    this.transform.position = Vector3.MoveTowards(transform.position, distance[i], 10 * Time.deltaTime);
                 }
+            }
+
+            for (int i = 0; i < mag.Length; i++)
+            {
+                
+                magPlayer[i] = 100000000;
             }
 
 
@@ -78,7 +95,7 @@ public class FlyingEnemyScript : MonoBehaviour
         {
            Vector3 distance = this.transform.position - player.transform.position;
            float magDistance = distance.magnitude;
-           MoveTowardsPlayer(magDistance, distance, 5f);
+           MoveTowardsPlayer(magDistance, distance, 10f);
         }
     }
     public void MoveTowardsPlayer(float magDistance, Vector3 distance, float moveSpeed)
