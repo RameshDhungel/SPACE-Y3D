@@ -33,8 +33,6 @@ public class PlayerHealth : MonoBehaviour
             Death();
             isDead = true;
         }
-        
-        Debug.Log("in here playerMethod" + currentHealth);
     }
 
     public void TakeDamage(float takenDamage)

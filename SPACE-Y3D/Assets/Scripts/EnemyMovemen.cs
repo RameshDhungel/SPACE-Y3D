@@ -33,14 +33,10 @@ public class EnemyMovemen : MonoBehaviour
         distance =  Enemy.transform.position - player.transform.position;
         //Debug.Log(distance.x + " " + distance.y + " " + distance.z);
         magDistance = distance.magnitude;
-        //Debug.Log("outside " + magDistance);
-        if (magDistance > 3)
-        {
-           // Debug.Log("inside if" + magDistance);
-            Enemy.transform.position = Vector3.MoveTowards(transform.position, -distance, moveSpeed * Time.deltaTime);
-            Enemy.transform.LookAt(player.transform);
-            
-        }if(magDistance < 3)
+
+        MoveTowardsPlayer();
+
+        if (magDistance < 3)
         {
             if (timeCounter < Time.time)
             {
@@ -48,6 +44,17 @@ public class EnemyMovemen : MonoBehaviour
                 EnemyShoot();
                 timeCounter = waitTime + Time.time;
             }
+        }
+    }
+
+    public void MoveTowardsPlayer()
+    {
+        if (magDistance > 3)
+        {
+            // Debug.Log("inside if" + magDistance);
+            Enemy.transform.position = Vector3.MoveTowards(transform.position, -distance, moveSpeed * Time.deltaTime);
+            Enemy.transform.LookAt(player.transform);
+
         }
     }
     public void EnemyShoot()
