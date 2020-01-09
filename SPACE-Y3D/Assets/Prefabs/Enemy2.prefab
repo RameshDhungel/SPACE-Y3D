@@ -273,7 +273,7 @@ MonoBehaviour:
   m_FillMethod: 0
   m_FillAmount: 1
   m_FillClockwise: 1
-  m_FillOrigin: 1
+  m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
 --- !u!1 &8262836403950108767
@@ -295,7 +295,7 @@ GameObject:
   - component: {fileID: 8668692099994690216}
   m_Layer: 0
   m_Name: Enemy2
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -401,8 +401,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5eb91e034e16114a961f93627bc39d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthIMG: {fileID: 0}
-  magPrefab: {fileID: 0}
+  healthIMG: {fileID: 523476672761816612}
+  magPrefab: {fileID: 2685071939669765231, guid: 3f12aa50843dd0e448cf3c5cdbfe3984,
+    type: 3}
 --- !u!114 &1923816172277629623
 MonoBehaviour:
   m_ObjectHideFlags: 0
