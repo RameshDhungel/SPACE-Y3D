@@ -290,7 +290,7 @@ GameObject:
   - component: {fileID: 6064351471931399839}
   - component: {fileID: 4248300345177281195}
   - component: {fileID: 8382932733136061297}
-  - component: {fileID: 3375395084768888369}
+  - component: {fileID: -8821615088059987406}
   - component: {fileID: 8668692099994690216}
   m_Layer: 0
   m_Name: Enemy2
@@ -402,7 +402,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthIMG: {fileID: 0}
   magPrefab: {fileID: 0}
---- !u!114 &3375395084768888369
+--- !u!114 &-8821615088059987406
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -411,10 +411,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 8262836403950108767}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bfc914e79aac5df4ab18978ad26c04bd, type: 3}
+  m_Script: {fileID: 11500000, guid: 43376942652693f4e9af247281359d85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stopMovement: 0
+  target: {fileID: 0}
+  movementSpeed: 10
+  rotationalDamp: 0.5
+  detectionDistance: 20
+  rayCastOffset: 2.5
 --- !u!54 &8668692099994690216
 Rigidbody:
   m_ObjectHideFlags: 0
