@@ -8,15 +8,30 @@ public class FlyingTemp : MonoBehaviour
     [SerializeField] float movementSpeed = 10f;
     [SerializeField] float rotationalDamp = .5f;
 
-    [SerializeField] float detectionDistance = 20f;
-    [SerializeField] float rayCastOffset = 2.5f;
+    [SerializeField] float detectionDistance = 1f;
+    [SerializeField] float rayCastOffset = 2f;
+    public GameObject firePoint;
+    public GameObject bulletPrefab;
+    EnemyAudioScript enemyAudio;
+
+    private float waitTime = 0.5f;
+    private float timeCounter = 0;
 
     // Update is called once per frame
     void Update()
     {
+        enemyAudio = this.gameObject.GetComponent<EnemyAudioScript>();
         pathFinding();
         //Turn();
         Move();
+
+        if ((transform.position - target.position).magnitude < 15 && (timeCounter < Time.time))
+        {
+                //Debug.Log("in here");
+                EnemyShoot();
+                timeCounter = waitTime + Time.time;
+        }
+     
     }
 
     void Turn()
@@ -24,6 +39,7 @@ public class FlyingTemp : MonoBehaviour
         Vector3 pos = target.position - transform.position;
         Quaternion rotation = Quaternion.LookRotation(pos);
         transform.rotation = Quaternion.Slerp(transform.rotation, rotation, rotationalDamp * Time.deltaTime);
+        //transform.LookAt(target.transform);
         /*float magDistance = pos.magnitude;
         MoveTowardsPlayer(magDistance, pos, 10f);*/
     }
@@ -74,7 +90,7 @@ public class FlyingTemp : MonoBehaviour
 
     }
 
-    /*public void MoveTowardsPlayer(float magDistance, Vector3 pos, float movementSpeed)
+    public void MoveTowardsPlayer(float magDistance, Vector3 pos, float movementSpeed)
     {
         if (magDistance > 3)
         {
@@ -83,7 +99,14 @@ public class FlyingTemp : MonoBehaviour
             this.transform.LookAt(target.transform);
 
         }
-    }*/
+    }
+
+    public void EnemyShoot()
+    {
+        GameObject bullet = Instantiate(bulletPrefab, firePoint.transform.position, firePoint.transform.rotation);
+        bullet.GetComponent<BulletBehavior>().Enemydamage = this.gameObject.GetComponent<Enemy>().DealDamage();
+        //enemyAudio.PlayAudio();
+    }
 }
 
     

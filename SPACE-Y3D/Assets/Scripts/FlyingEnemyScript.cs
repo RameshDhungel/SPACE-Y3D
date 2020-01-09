@@ -80,6 +80,9 @@ public class FlyingEnemyScript : MonoBehaviour
                 if (small == magPlayer[i])
                 {
                     this.transform.position = Vector3.MoveTowards(transform.position, distance[i], 10 * Time.deltaTime);
+                    Vector3 pos = player.transform.position - transform.position;
+                    Quaternion rotation = Quaternion.LookRotation(pos);
+                    transform.rotation = Quaternion.Slerp(transform.rotation, rotation, 0.5f * Time.deltaTime);
                 }
             }
 
@@ -104,8 +107,10 @@ public class FlyingEnemyScript : MonoBehaviour
         {
             // Debug.Log("inside if" + magDistance);
             this.transform.position = Vector3.MoveTowards(transform.position, -distance, moveSpeed * Time.deltaTime);
-            this.transform.LookAt(player.transform);
-
+            //this.transform.LookAt(player.transform);
+            Vector3 pos = player.transform.position - transform.position;
+            Quaternion rotation = Quaternion.LookRotation(pos);
+            transform.rotation = Quaternion.Slerp(transform.rotation, rotation, 0.5f * Time.deltaTime);
         }
     }
 }

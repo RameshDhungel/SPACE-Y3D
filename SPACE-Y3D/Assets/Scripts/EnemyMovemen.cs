@@ -10,10 +10,10 @@ public class EnemyMovemen : MonoBehaviour
     Rigidbody enemyRb;
     Vector3 distance;
     float magDistance;
-    public GameObject bulletPrefab;
     private float waitTime = 1.5f;
     private float timeCounter = 0;
     public GameObject firePoint;
+    public GameObject bulletPrefab;
 
     EnemyAudioScript enemyAudio;
     // Start is called before the first frame update
